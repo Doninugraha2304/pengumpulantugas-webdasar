@@ -1,0 +1,2216 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LMS Kelas Pranikah - Bimbingan Perkawinan Digital</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #e3f2fd 0%, #f3e5f5 100%);
+      color: #2c3e50;
+      line-height: 1.6;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    /* Header */
+    .header {
+      background: linear-gradient(135deg, #64b5f6 0%, #42a5f5 100%);
+      color: white;
+      padding: 20px 0;
+      text-align: center;
+      border-radius: 15px;
+      margin-bottom: 30px;
+      box-shadow: 0 8px 32px rgba(100, 181, 246, 0.3);
+    }
+
+    .header h1 {
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+
+    .header p {
+      font-size: 1.1rem;
+      opacity: 0.9;
+    }
+
+    /* Navigation */
+    .nav-tabs {
+      display: flex;
+      background: white;
+      border-radius: 15px;
+      padding: 5px;
+      margin-bottom: 30px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    }
+
+    .nav-tab {
+      flex: 1;
+      padding: 15px 20px;
+      text-align: center;
+      cursor: pointer;
+      border-radius: 10px;
+      transition: all 0.3s ease;
+      font-weight: 500;
+      color: #666;
+    }
+
+    .nav-tab.active {
+      background: linear-gradient(135deg, #66bb6a 0%, #4caf50 100%);
+      color: white;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3);
+    }
+
+    .nav-tab:hover:not(.active) {
+      background: #f5f5f5;
+      transform: translateY(-1px);
+    }
+
+    /* Progress Dashboard */
+    .progress-dashboard {
+      background: white;
+      border-radius: 20px;
+      padding: 30px;
+      margin-bottom: 30px;
+      box-shadow: 0 8px 40px rgba(0,0,0,0.1);
+    }
+
+    .progress-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .progress-title {
+      font-size: 1.8rem;
+      font-weight: 600;
+      color: #2c3e50;
+    }
+
+    .progress-percentage {
+      font-size: 2rem;
+      font-weight: 700;
+      color: #4caf50;
+    }
+
+    .progress-bar-container {
+      background: #e8f5e8;
+      border-radius: 25px;
+      height: 20px;
+      margin-bottom: 20px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .progress-bar {
+      height: 100%;
+      background: linear-gradient(90deg, #66bb6a 0%, #4caf50 100%);
+      border-radius: 25px;
+      transition: width 0.5s ease;
+      position: relative;
+    }
+
+    .progress-bar::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.3) 50%, transparent 100%);
+      animation: shimmer 2s infinite;
+    }
+
+    @keyframes shimmer {
+      0% { transform: translateX(-100%); }
+      100% { transform: translateX(100%); }
+    }
+
+    .progress-stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+    }
+
+    .stat-card {
+      background: #f8f9fa;
+      padding: 20px;
+      border-radius: 15px;
+      text-align: center;
+      border-left: 5px solid #4caf50;
+    }
+
+    .stat-number {
+      font-size: 2rem;
+      font-weight: 700;
+      color: #4caf50;
+    }
+
+    .stat-label {
+      color: #666;
+      font-weight: 500;
+    }
+
+    /* Alert/Notification */
+    .alert {
+      padding: 15px 20px;
+      border-radius: 10px;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      animation: slideInDown 0.5s ease;
+    }
+
+    .alert-warning {
+      background: #fff3cd;
+      color: #856404;
+      border-left: 5px solid #ffc107;
+    }
+
+    .alert-success {
+      background: #d4edda;
+      color: #155724;
+      border-left: 5px solid #28a745;
+    }
+
+    .alert-info {
+      background: #cce7ff;
+      color: #004085;
+      border-left: 5px solid #007bff;
+    }
+
+    @keyframes slideInDown {
+      from { transform: translateY(-30px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    /* Content Sections */
+    .content-section {
+      display: none;
+    }
+
+    .content-section.active {
+      display: block;
+      animation: fadeIn 0.5s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Module Cards */
+    .modules-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 25px;
+      margin-top: 20px;
+    }
+
+    .module-card {
+      background: white;
+      border-radius: 20px;
+      padding: 25px;
+      box-shadow: 0 6px 30px rgba(0,0,0,0.1);
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .module-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 50px rgba(0,0,0,0.15);
+    }
+
+    .module-card.locked {
+      opacity: 0.6;
+      pointer-events: none;
+    }
+
+    .module-card.completed {
+      border: 2px solid #4caf50;
+    }
+
+    .module-status {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      padding: 8px 15px;
+      border-radius: 20px;
+      font-size: 0.9rem;
+      font-weight: 600;
+    }
+
+    .status-locked {
+      background: #fce4ec;
+      color: #ad1457;
+    }
+
+    .status-active {
+      background: #e3f2fd;
+      color: #1976d2;
+    }
+
+    .status-completed {
+      background: #e8f5e8;
+      color: #388e3c;
+    }
+
+    .module-icon {
+      width: 60px;
+      height: 60px;
+      background: linear-gradient(135deg, #64b5f6, #42a5f5);
+      border-radius: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 15px;
+      color: white;
+      font-size: 1.5rem;
+    }
+
+    .module-title {
+      font-size: 1.3rem;
+      font-weight: 600;
+      margin-bottom: 10px;
+      color: #2c3e50;
+    }
+
+    .module-description {
+      color: #666;
+      margin-bottom: 15px;
+      font-size: 0.95rem;
+    }
+
+    .module-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .module-duration {
+      background: #f8f9fa;
+      padding: 5px 10px;
+      border-radius: 15px;
+      font-size: 0.9rem;
+      color: #666;
+    }
+
+    .module-progress {
+      font-size: 0.9rem;
+      color: #4caf50;
+      font-weight: 600;
+    }
+
+    .btn {
+      padding: 12px 25px;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      font-weight: 600;
+      text-decoration: none;
+      display: inline-block;
+      text-align: center;
+      transition: all 0.3s ease;
+      font-size: 1rem;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #64b5f6, #42a5f5);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(66, 165, 245, 0.4);
+    }
+
+    .btn-success {
+      background: linear-gradient(135deg, #66bb6a, #4caf50);
+      color: white;
+    }
+
+    .btn-success:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(76, 175, 80, 0.4);
+    }
+
+    .btn-disabled {
+      background: #e0e0e0;
+      color: #9e9e9e;
+      cursor: not-allowed;
+    }
+
+    /* Modal */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.5);
+      backdrop-filter: blur(5px);
+    }
+
+    .modal-content {
+      background: white;
+      margin: 5% auto;
+      padding: 30px;
+      border-radius: 20px;
+      width: 90%;
+      max-width: 800px;
+      max-height: 80vh;
+      overflow-y: auto;
+      position: relative;
+      animation: modalSlideIn 0.3s ease;
+    }
+
+    @keyframes modalSlideIn {
+      from { transform: translateY(-50px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    .modal-close {
+      position: absolute;
+      right: 20px;
+      top: 20px;
+      font-size: 1.5rem;
+      cursor: pointer;
+      color: #666;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
+    }
+
+    .modal-close:hover {
+      background: #f5f5f5;
+      color: #333;
+    }
+
+    /* Quiz Styles */
+    .quiz-container {
+      background: #f8f9fa;
+      border-radius: 15px;
+      padding: 25px;
+      margin: 20px 0;
+    }
+
+    .question {
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin-bottom: 20px;
+      color: #2c3e50;
+    }
+
+    .options {
+      display: grid;
+      gap: 10px;
+    }
+
+    .option {
+      background: white;
+      border: 2px solid #e0e0e0;
+      border-radius: 10px;
+      padding: 15px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .option:hover {
+      border-color: #64b5f6;
+      background: #f3f8ff;
+    }
+
+    .option.selected {
+      border-color: #4caf50;
+      background: #e8f5e8;
+    }
+
+    .option.correct {
+      border-color: #4caf50;
+      background: #e8f5e8;
+    }
+
+    .option.wrong {
+      border-color: #f44336;
+      background: #ffebee;
+    }
+
+    .quiz-result {
+      margin-top: 15px;
+      padding: 15px;
+      border-radius: 10px;
+      font-weight: 600;
+      text-align: center;
+    }
+
+    .quiz-result.correct {
+      background: #e8f5e8;
+      color: #388e3c;
+    }
+
+    .quiz-result.wrong {
+      background: #ffebee;
+      color: #d32f2f;
+    }
+
+    /* Mentor Booking Section */
+    .mentor-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 25px;
+      margin-top: 20px;
+    }
+
+    .mentor-card {
+      background: white;
+      border-radius: 20px;
+      padding: 25px;
+      box-shadow: 0 6px 30px rgba(0,0,0,0.1);
+      transition: all 0.3s ease;
+      border-left: 5px solid #4caf50;
+    }
+
+    .mentor-card.psychologist {
+      border-left-color: #ff9800;
+    }
+
+    .mentor-card.religious {
+      border-left-color: #2196f3;
+    }
+
+    .mentor-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+    }
+
+    .mentor-avatar {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #64b5f6, #42a5f5);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 2rem;
+      margin-bottom: 15px;
+    }
+
+    .mentor-name {
+      font-size: 1.3rem;
+      font-weight: 600;
+      margin-bottom: 5px;
+    }
+
+    .mentor-type {
+      color: #666;
+      margin-bottom: 10px;
+    }
+
+    .mentor-rating {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      margin-bottom: 15px;
+    }
+
+    .stars {
+      color: #ffc107;
+      font-size: 1.1rem;
+    }
+
+    .rating-number {
+      color: #666;
+      font-size: 0.9rem;
+    }
+
+    .mentor-schedule {
+      background: #f8f9fa;
+      border-radius: 10px;
+      padding: 15px;
+      margin-bottom: 15px;
+    }
+
+    .schedule-title {
+      font-weight: 600;
+      margin-bottom: 10px;
+      color: #2c3e50;
+    }
+
+    .time-slots {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .time-slot {
+      background: white;
+      border: 1px solid #e0e0e0;
+      border-radius: 15px;
+      padding: 5px 10px;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .time-slot:hover {
+      border-color: #4caf50;
+      background: #e8f5e8;
+    }
+
+    .time-slot.selected {
+      background: #4caf50;
+      color: white;
+      border-color: #4caf50;
+    }
+
+    /* Certificate */
+    .certificate {
+      background: linear-gradient(135deg, #fff9c4, #f4f4f4);
+      border: 3px dashed #4caf50;
+      border-radius: 20px;
+      padding: 40px;
+      text-align: center;
+      margin: 30px 0;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .certificate::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(76,175,80,0.1) 0%, transparent 50%);
+      animation: certificateGlow 3s ease-in-out infinite;
+    }
+
+    @keyframes certificateGlow {
+      0%, 100% { transform: rotate(0deg); }
+      50% { transform: rotate(180deg); }
+    }
+
+    .certificate-icon {
+      font-size: 4rem;
+      color: #4caf50;
+      margin-bottom: 20px;
+    }
+
+    .certificate-title {
+      font-size: 2rem;
+      font-weight: 700;
+      color: #2c3e50;
+      margin-bottom: 15px;
+    }
+
+    .certificate-description {
+      color: #666;
+      margin-bottom: 25px;
+      font-size: 1.1rem;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .container {
+        padding: 10px;
+      }
+
+      .header h1 {
+        font-size: 2rem;
+      }
+
+      .nav-tabs {
+        flex-direction: column;
+        gap: 5px;
+      }
+
+      .modules-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .progress-stats {
+        grid-template-columns: 1fr;
+      }
+
+      .mentor-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Loading Animation */
+    .loading {
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+      border: 3px solid #f3f3f3;
+      border-top: 3px solid #4caf50;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    .locked-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(255,255,255,0.9);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      border-radius: 20px;
+      font-size: 3rem;
+      color: #999;
+    }
+
+    .locked-text {
+      font-size: 1rem;
+      margin-top: 10px;
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Header -->
+    <div class="header">
+      <h1><i class="fas fa-graduation-cap"></i> LMS Kelas Pranikah</h1>
+      <p>Bimbingan Perkawinan Digital - Wajib Selesai LMS Sebelum Booking Mentor</p>
+    </div>
+
+    <!-- Progress Dashboard -->
+    <div class="progress-dashboard">
+      <div class="progress-header">
+        <div class="progress-title">Dashboard Progress</div>
+        <div class="progress-percentage" id="overallProgress">0%</div>
+      </div>
+      <div class="progress-bar-container">
+        <div class="progress-bar" id="progressBar" style="width: 0%"></div>
+      </div>
+      <div class="progress-stats">
+        <div class="stat-card">
+          <div class="stat-number" id="completedModules">0</div>
+          <div class="stat-label">Modul Selesai</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number" id="totalQuizzes">0</div>
+          <div class="stat-label">Quiz Lulus</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number" id="studyTime">0</div>
+          <div class="stat-label">Jam Belajar</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number" id="averageScore">0%</div>
+          <div class="stat-label">Rata-rata Nilai</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Alert/Notification -->
+    <div id="alertContainer"></div>
+
+    <!-- Navigation Tabs -->
+    <div class="nav-tabs">
+      <div class="nav-tab active" onclick="switchTab('learning')">
+        <i class="fas fa-book-open"></i> Pembelajaran LMS
+      </div>
+      <div class="nav-tab" id="mentorTab" onclick="switchTab('mentor')">
+        <i class="fas fa-user-tie"></i> Booking Mentor
+      </div>
+      <div class="nav-tab" onclick="switchTab('certificate')">
+        <i class="fas fa-certificate"></i> Sertifikat
+      </div>
+    </div>
+
+    <!-- Learning Content -->
+    <div id="learning" class="content-section active">
+      <div class="modules-grid" id="modulesContainer">
+        <!-- Modules will be generated by JavaScript -->
+      </div>
+    </div>
+
+    <!-- Mentor Booking Content -->
+    <div id="mentor" class="content-section">
+      <div id="mentorLockMessage" class="alert alert-warning">
+        <i class="fas fa-lock"></i>
+        <div>
+          <strong>Akses Terbatas!</strong><br>
+          Anda harus menyelesaikan semua modul LMS dan lulus evaluasi untuk dapat booking mentor.
+        </div>
+      </div>
+      
+      <div id="mentorContent" style="display: none;">
+        <h2>Pilih Mentor Bimbingan</h2>
+        <p>Setelah menyelesaikan LMS, pilih mentor yang sesuai untuk konsultasi dan evaluasi akhir.</p>
+        
+        <div class="mentor-grid" id="mentorContainer">
+          <!-- Mentors will be generated by JavaScript -->
+        </div>
+      </div>
+    </div>
+
+    <!-- Certificate Content -->
+    <div id="certificate" class="content-section">
+      <div id="certificateMessage" class="alert alert-info">
+        <i class="fas fa-info-circle"></i>
+        <div>
+          Sertifikat akan tersedia setelah Anda menyelesaikan semua modul LMS dan mendapat persetujuan dari mentor.
+        </div>
+      </div>
+      
+      <div id="certificateContent" style="display: none;">
+        <div class="certificate">
+          <div class="certificate-icon">
+            <i class="fas fa-medal"></i>
+          </div>
+          <div class="certificate-title">Sertifikat Kelulusan</div>
+          <div class="certificate-description">
+            Selamat! Anda telah berhasil menyelesaikan seluruh program Bimbingan Perkawinan LMS
+          </div>
+          <button class="btn btn-success" onclick="downloadCertificate()">
+            <i class="fas fa-download"></i> Download Sertifikat (PDF)
+          </button>
+          <button class="btn btn-primary" onclick="downloadCertificate()">
+            <i class="fas fa-image"></i> Download Badge (PNG)
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal for Module Content -->
+  <div id="moduleModal" class="modal">
+    <div class="modal-content">
+      <span class="modal-close" onclick="closeModal()">&times;</span>
+      <div id="modalContent">
+        <!-- Dynamic content will be loaded here -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal for Mentor Booking -->
+  <div id="mentorModal" class="modal">
+    <div class="modal-content">
+      <span class="modal-close" onclick="closeMentorModal()">&times;</span>
+      <div id="mentorModalContent">
+        <!-- Dynamic content will be loaded here -->
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Data Struktur
+    const moduleData = [
+      {
+        id: 'pretest',
+        title: 'Pre-test & Kontrak Belajar',
+        description: 'Tes awal untuk mengukur pemahaman dan komitmen belajar',
+        icon: 'fas fa-clipboard-check',
+        duration: '15 menit',
+        type: 'pretest',
+        content: {
+          pretest: [
+            {
+              question: 'Apa yang Anda harapkan dari program bimbingan pranikah ini?',
+              options: [
+                'Mendapat sertifikat saja',
+                'Memahami tanggung jawab berumah tangga',
+                'Memenuhi syarat administratif',
+                'Tidak tahu'
+              ],
+              correct: 1
+            },
+            {
+              question: 'Seberapa penting komunikasi dalam rumah tangga?',
+              options: [
+                'Tidak penting',
+                'Cukup penting',
+                'Sangat penting',
+                'Tidak tahu'
+              ],
+              correct: 2
+            }
+          ]
+        },
+        unlocked: true,
+        completed: false
+      },
+      {
+        id: 'sakinah',
+        title: 'Mempersiapkan Keluarga Sakinah',
+        description: 'Fondasi rumah tangga berdasarkan taqwa, nilai-nilai Al-Quran dan Hadis dalam berkeluarga',
+        icon: 'fas fa-heart',
+        duration: '45 menit',
+        type: 'learning',
+        content: {
+          video: 'https://www.youtube.com/embed/sample1',
+          text: `
+            <h3>Fondasi Keluarga Sakinah</h3>
+            <p>Keluarga sakinah adalah keluarga yang dibangun atas dasar ketakwaan kepada Allah SWT. Kata 'sakinah' berasal dari kata 'sakana' yang berarti tenang, tentram, dan damai.</p>
+            
+            <h4>Karakteristik Keluarga Sakinah:</h4>
+            <ul>
+              <li>Berdasarkan pada ketakwaan kepada Allah SWT</li>
+              <li>Saling mencintai dan menyayangi (mawaddah)</li>
+              <li>Saling berbelas kasihan (rahmah)</li>
+              <li>Komunikasi yang baik dan terbuka</li>
+              <li>Saling menghormati dan menghargai</li>
+              <li>Melaksanakan ibadah bersama</li>
+            </ul>
+
+            <h4>Dalil Al-Quran (QS. Ar-Rum: 21):</h4>
+            <blockquote>"Dan di antara tanda-tanda kekuasaan-Nya ialah Dia menciptakan untukmu isteri-isteri dari jenismu sendiri, supaya kamu cenderung dan merasa tenteram kepadanya, dan dijadikan-Nya diantaramu rasa kasih dan sayang."</blockquote>
+          `,
+          quiz: [
+            {
+              question: 'Apa arti kata "sakinah" dalam keluarga sakinah?',
+              options: [
+                'Kaya dan sejahtera',
+                'Tenang, tentram, dan damai',
+                'Banyak anak',
+                'Terkenal di masyarakat'
+              ],
+              correct: 1
+            },
+            {
+              question: 'Apa dasar utama pembentukan keluarga sakinah menurut Islam?',
+              options: [
+                'Cinta dan kasih sayang',
+                'Kekayaan dan status sosial',
+                'Ketakwaan kepada Allah SWT',
+                'Kecocokan karakter'
+              ],
+              correct: 2
+            }
+          ]
+        },
+        unlocked: false,
+        completed: false
+      },
+      {
+        id: 'psychology',
+        title: 'Psikologi & Dinamika Keluarga',
+        description: 'Komunikasi efektif antar pasangan, manajemen konflik dalam rumah tangga, pengelolaan emosi dan mental keluarga',
+        icon: 'fas fa-brain',
+        duration: '50 menit',
+        type: 'learning',
+        content: {
+          text: `
+            <h3>Psikologi dan Dinamika Keluarga</h3>
+            <p>Memahami psikologi dalam keluarga sangat penting untuk menciptakan hubungan yang harmonis dan sehat antara suami istri serta dengan anak-anak.</p>
+            
+            <h4>Komunikasi Efektif dalam Keluarga:</h4>
+            <ul>
+              <li><strong>Mendengarkan Aktif:</strong> Berikan perhatian penuh saat pasangan berbicara</li>
+              <li><strong>Empati:</strong> Berusaha memahami perasaan dan sudut pandang pasangan</li>
+              <li><strong>Komunikasi Non-Verbal:</strong> Perhatikan bahasa tubuh dan ekspresi wajah</li>
+              <li><strong>Timing yang Tepat:</strong> Pilih waktu yang tepat untuk membicarakan hal penting</li>
+              <li><strong>Hindari Kata-kata Menyakitkan:</strong> Gunakan bahasa yang santun dan membangun</li>
+            </ul>
+
+            <h4>Manajemen Konflik:</h4>
+            <ol>
+              <li><strong>Identifikasi Masalah:</strong> Pahami akar permasalahan dengan jelas</li>
+              <li><strong>Dengarkan Semua Pihak:</strong> Berikan kesempatan masing-masing untuk menjelaskan</li>
+              <li><strong>Fokus pada Solusi:</strong> Cari jalan keluar yang win-win solution</li>
+              <li><strong>Hindari Menyalahkan:</strong> Fokus pada masalah, bukan pada orangnya</li>
+              <li><strong>Kompromi:</strong> Siap untuk saling mengalah demi keharmonisan</li>
+            </ol>
+
+            <h4>Mengelola Emosi dalam Keluarga:</h4>
+            <ul>
+              <li>Kenali emosi diri sendiri dan pasangan</li>
+              <li>Belajar mengontrol amarah dan frustrasi</li>
+              <li>Ekspresikan perasaan dengan cara yang sehat</li>
+              <li>Jangan biarkan masalah berlarut-larut</li>
+              <li>Cari bantuan profesional jika diperlukan</li>
+            </ul>
+          `,
+          quiz: [
+            {
+              question: 'Apa yang dimaksud dengan mendengarkan aktif dalam komunikasi keluarga?',
+              options: [
+                'Mendengar sambil melakukan aktivitas lain',
+                'Memberikan perhatian penuh saat pasangan berbicara',
+                'Mendengar hanya poin-poin penting saja',
+                'Mendengar sambil menyiapkan argumen balasan'
+              ],
+              correct: 1
+            },
+            {
+              question: 'Langkah pertama dalam manajemen konflik keluarga adalah:',
+              options: [
+                'Mencari siapa yang salah',
+                'Mengidentifikasi masalah dengan jelas',
+                'Langsung mencari solusi',
+                'Menghindari konflik'
+              ],
+              correct: 1
+            }
+          ]
+        },
+        unlocked: false,
+        completed: false
+      },
+      {
+        id: 'finance',
+        title: 'Manajemen Keuangan Keluarga',
+        description: 'Perencanaan ekonomi keluarga, pengelolaan keuangan rumah tangga yang sehat dan berkelanjutan',
+        icon: 'fas fa-coins',
+        duration: '40 menit',
+        type: 'learning',
+        content: {
+          text: `
+            <h3>Manajemen Keuangan Keluarga</h3>
+            <p>Pengelolaan keuangan yang baik adalah kunci kesejahteraan dan keharmonisan keluarga. Tanpa perencanaan yang matang, masalah keuangan dapat menjadi sumber konflik dalam rumah tangga.</p>
+            
+            <h4>Prinsip Dasar Keuangan Keluarga:</h4>
+            <ul>
+              <li><strong>Transparansi:</strong> Keterbukaan dalam masalah keuangan antara suami istri</li>
+              <li><strong>Perencanaan:</strong> Membuat rencana keuangan jangka pendek dan panjang</li>
+              <li><strong>Prioritas:</strong> Membedakan antara kebutuhan dan keinginan</li>
+              <li><strong>Disiplin:</strong> Konsisten menjalankan rencana yang telah dibuat</li>
+              <li><strong>Evaluasi:</strong> Meninjau dan menyesuaikan rencana secara berkala</li>
+            </ul>
+
+            <h4>Langkah-langkah Perencanaan Keuangan:</h4>
+            <ol>
+              <li><strong>Hitung Total Pendapatan:</strong> Catat semua sumber penghasilan keluarga</li>
+              <li><strong>Identifikasi Pengeluaran:</strong> Buat daftar semua pengeluaran bulanan</li>
+              <li><strong>Buat Anggaran:</strong> Alokasikan dana untuk setiap kategori pengeluaran</li>
+              <li><strong>Sisihkan untuk Tabungan:</strong> Minimal 10-20% dari pendapatan</li>
+              <li><strong>Rencana Darurat:</strong> Siapkan dana untuk kondisi darurat</li>
+              <li><strong>Investasi Masa Depan:</strong> Rencanakan untuk pendidikan anak dan pensiun</li>
+            </ol>
+
+            <h4>Kategori Pengeluaran Rumah Tangga:</h4>
+            <ul>
+              <li><strong>Kebutuhan Pokok (50%):</strong> Makanan, rumah, transportasi</li>
+              <li><strong>Tabungan & Investasi (20%):</strong> Dana darurat, investasi jangka panjang</li>
+              <li><strong>Hiburan & Lifestyle (20%):</strong> Rekreasi, hobi, makan di luar</li>
+              <li><strong>Pembayaran Hutang (10%):</strong> Cicilan rumah, kendaraan, dll</li>
+            </ul>
+
+            <h4>Tips Mengelola Keuangan Keluarga:</h4>
+            <ul>
+              <li>Diskusikan target keuangan bersama pasangan</li>
+              <li>Buat catatan pengeluaran harian</li>
+              <li>Hindari hutang konsumtif</li>
+              <li>Manfaatkan teknologi untuk pencatatan keuangan</li>
+              <li>Evaluasi anggaran setiap bulan</li>
+              <li>Ajarkan anak tentang pentingnya menabung</li>
+            </ul>
+          `,
+          quiz: [
+            {
+              question: 'Berapa persen idealnya dari pendapatan yang dialokasikan untuk tabungan dan investasi?',
+              options: [
+                '5-10%',
+                '10-20%',
+                '20-30%',
+                '30-40%'
+              ],
+              correct: 1
+            },
+            {
+              question: 'Apa prinsip utama dalam mengelola keuangan keluarga?',
+              options: [
+                'Hemat dalam segala hal',
+                'Transparansi dan perencanaan',
+                'Menabung sebanyak mungkin',
+                'Menghindari investasi'
+              ],
+              correct: 1
+            }
+          ]
+        },
+        unlocked: false,
+        completed: false
+      },
+      {
+        id: 'health',
+        title: 'Kesehatan Reproduksi',
+        description: 'Kesehatan reproduksi dan seksual, pola hidup bersih dan sehat, perencanaan kehamilan yang bertanggung jawab',
+        icon: 'fas fa-heartbeat',
+        duration: '55 menit',
+        type: 'learning',
+        content: {
+          video: 'https://www.youtube.com/embed/sample2',
+          text: `
+            <h3>Kesehatan Reproduksi dalam Pernikahan</h3>
+            <p>Kesehatan reproduksi adalah bagian penting dari kehidupan pernikahan yang sehat. Pemahaman yang baik tentang kesehatan reproduksi akan membantu pasangan dalam merencanakan keluarga yang sehat dan bahagia.</p>
+            
+            <h4>Pentingnya Kesehatan Reproduksi:</h4>
+            <ul>
+              <li>Menjaga kesehatan organ reproduksi pria dan wanita</li>
+              <li>Mencegah penyakit menular seksual</li>
+              <li>Merencanakan kehamilan yang sehat</li>
+              <li>Menjaga kesehatan ibu dan anak</li>
+              <li>Meningkatkan kualitas hubungan suami istri</li>
+            </ul>
+
+            <h4>Kesehatan Reproduksi Wanita:</h4>
+            <ul>
+              <li><strong>Siklus Menstruasi:</strong> Pahami siklus normal dan tanda-tanda kelainan</li>
+              <li><strong>Kebersihan Organ Intim:</strong> Menjaga kebersihan dengan cara yang benar</li>
+              <li><strong>Pemeriksaan Rutin:</strong> Pap smear, USG, dan pemeriksaan lainnya</li>
+              <li><strong>Nutrisi:</strong> Konsumsi makanan bergizi untuk kesehatan reproduksi</li>
+              <li><strong>Olahraga:</strong> Aktivitas fisik yang mendukung kesehatan reproduksi</li>
+            </ul>
+
+            <h4>Kesehatan Reproduksi Pria:</h4>
+            <ul>
+              <li><strong>Kebersihan Organ Intim:</strong> Menjaga kebersihan untuk mencegah infeksi</li>
+              <li><strong>Pemeriksaan Rutin:</strong> Check-up kesehatan reproduksi secara berkala</li>
+              <li><strong>Gaya Hidup Sehat:</strong> Hindari rokok, alkohol, dan stress berlebihan</li>
+              <li><strong>Nutrisi:</strong> Konsumsi makanan yang mendukung kualitas sperma</li>
+              <li><strong>Olahraga:</strong> Menjaga kebugaran tubuh secara keseluruhan</li>
+            </ul>
+
+            <h4>Perencanaan Kehamilan:</h4>
+            <ol>
+              <li><strong>Konsultasi Pra-Konsepsi:</strong> Pemeriksaan kesehatan sebelum merencanakan kehamilan</li>
+              <li><strong>Konsumsi Asam Folat:</strong> Mulai konsumsi minimal 1 bulan sebelum hamil</li>
+              <li><strong>Vaksinasi:</strong> Pastikan vaksinasi lengkap sebelum hamil</li>
+              <li><strong>Gaya Hidup Sehat:</strong> Stop rokok, alkohol, dan obat-obatan terlarang</li>
+              <li><strong>Kelola Stress:</strong> Ciptakan kondisi mental yang stabil</li>
+              <li><strong>Timing yang Tepat:</strong> Pahami masa subur untuk perencanaan kehamilan</li>
+            </ol>
+
+            <h4>Pola Hidup Bersih dan Sehat:</h4>
+            <ul>
+              <li>Mandi dan ganti pakaian dalam secara teratur</li>
+              <li>Konsumsi makanan bergizi seimbang</li>
+              <li>Minum air putih yang cukup</li>
+              <li>Olahraga teratur minimal 30 menit per hari</li>
+              <li>Istirahat yang cukup 7-8 jam per hari</li>
+              <li>Kelola stress dengan baik</li>
+              <li>Hindari rokok dan alkohol</li>
+              <li>Pemeriksaan kesehatan rutin</li>
+            </ul>
+          `,
+          quiz: [
+            {
+              question: 'Kapan sebaiknya wanita mulai mengonsumsi asam folat dalam perencanaan kehamilan?',
+              options: [
+                'Setelah hamil',
+                'Minimal 1 bulan sebelum hamil',
+                'Saat melahirkan',
+                'Tidak perlu konsumsi'
+              ],
+              correct: 1
+            },
+            {
+              question: 'Apa manfaat utama menjaga kesehatan reproduksi dalam pernikahan?',
+              options: [
+                'Untuk penampilan saja',
+                'Mencegah penyakit dan merencanakan keluarga sehat',
+                'Menghemat biaya pengobatan',
+                'Mengikuti trend kesehatan'
+              ],
+              correct: 1
+            }
+          ]
+        },
+        unlocked: false,
+        completed: false
+      },
+      {
+        id: 'parenting',
+        title: 'Mempersiapkan Generasi Berkualitas',
+        description: 'Perencanaan dan pengasuhan anak, pencegahan stunting, pendidikan anak dalam keluarga yang berkualitas',
+        icon: 'fas fa-baby',
+        duration: '60 menit',
+        type: 'learning',
+        content: {
+          text: `
+            <h3>Mempersiapkan Generasi Berkualitas</h3>
+            <p>Mempersiapkan generasi yang berkualitas adalah investasi terpenting bagi masa depan keluarga dan bangsa. Hal ini dimulai dari perencanaan kehamilan hingga pengasuhan anak yang optimal.</p>
+            
+            <h4>Prinsip Dasar Pengasuhan Berkualitas:</h4>
+            <ul>
+              <li><strong>Cinta dan Kasih Sayang:</strong> Dasar utama dalam pengasuhan anak</li>
+              <li><strong>Konsistensi:</strong> Aturan dan nilai yang konsisten dalam keluarga</li>
+              <li><strong>Komunikasi:</strong> Dialog terbuka antara orang tua dan anak</li>
+              <li><strong>Keteladanan:</strong> Orang tua sebagai role model bagi anak</li>
+              <li><strong>Stimulus yang Tepat:</strong> Memberikan rangsangan sesuai tahap perkembangan</li>
+            </ul>
+
+            <h4>Pencegahan Stunting:</h4>
+            <p>Stunting adalah kondisi gagal tumbuh pada anak akibat kekurangan gizi kronis. Pencegahan dimulai dari:</p>
+            <ol>
+              <li><strong>1000 Hari Pertama Kehidupan:</strong>
+                <ul>
+                  <li>Gizi ibu hamil yang optimal</li>
+                  <li>ASI eksklusif 6 bulan pertama</li>
+                  <li>MPASI yang bergizi dan beragam</li>
+                  <li>Pemantauan tumbuh kembang rutin</li>
+                </ul>
+              </li>
+              <li><strong>Gizi Seimbang:</strong>
+                <ul>
+                  <li>Protein hewani dan nabati</li>
+                  <li>Karbohidrat kompleks</li>
+                  <li>Vitamin dan mineral</li>
+                  <li>Lemak sehat</li>
+                </ul>
+              </li>
+              <li><strong>Sanitasi dan Kebersihan:</strong>
+                <ul>
+                  <li>Air bersih dan sanitasi yang baik</li>
+                  <li>Kebersihan makanan dan lingkungan</li>
+                  <li>Cuci tangan dengan sabun</li>
+                </ul>
+              </li>
+            </ol>
+
+            <h4>Pendidikan Anak dalam Keluarga:</h4>
+            <ul>
+              <li><strong>Pendidikan Karakter:</strong>
+                <ul>
+                  <li>Kejujuran dan integritas</li>
+                  <li>Tanggung jawab dan disiplin</li>
+                  <li>Empati dan toleransi</li>
+                  <li>Kemandirian dan percaya diri</li>
+                </ul>
+              </li>
+              <li><strong>Pendidikan Agama:</strong>
+                <ul>
+                  <li>Nilai-nilai spiritual dan moral</li>
+                  <li>Ibadah dan akhlak mulia</li>
+                  <li>Toleransi beragama</li>
+                </ul>
+              </li>
+              <li><strong>Pendidikan Akademik:</strong>
+                <ul>
+                  <li>Stimulus kognitif sejak dini</li>
+                  <li>Membaca dan menulis</li>
+                  <li>Matematika dan sains</li>
+                  <li>Kreativitas dan seni</li>
+                </ul>
+              </li>
+            </ul>
+
+            <h4>Tahapan Perkembangan Anak:</h4>
+            <ul>
+              <li><strong>0-2 Tahun (Golden Age):</strong>
+                <ul>
+                  <li>Perkembangan otak 80% terjadi pada periode ini</li>
+                  <li>ASI eksklusif dan MPASI bergizi</li>
+                  <li>Stimulasi sensori dan motorik</li>
+                  <li>Ikatan emosional yang kuat dengan orang tua</li>
+                </ul>
+              </li>
+              <li><strong>2-5 Tahun (Pra-Sekolah):</strong>
+                <ul>
+                  <li>Perkembangan bahasa dan sosial</li>
+                  <li>Pembelajaran melalui bermain</li>
+                  <li>Pembentukan kebiasaan baik</li>
+                  <li>Persiapan sekolah formal</li>
+                </ul>
+              </li>
+              <li><strong>6-12 Tahun (Sekolah Dasar):</strong>
+                <ul>
+                  <li>Pengembangan kemampuan akademik</li>
+                  <li>Pembentukan karakter dan nilai</li>
+                  <li>Keterampilan sosial dan kerjasama</li>
+                  <li>Aktivitas fisik dan olahraga</li>
+                </ul>
+              </li>
+            </ul>
+
+            <h4>Tips Praktis Pengasuhan:</h4>
+            <ul>
+              <li>Berikan perhatian dan waktu berkualitas untuk anak</li>
+              <li>Dengarkan dan hargai pendapat anak</li>
+              <li>Berikan pujian atas pencapaian anak</li>
+              <li>Tetapkan batasan yang jelas dan konsisten</li>
+              <li>Jadilah contoh yang baik dalam berperilaku</li>
+              <li>Libatkan anak dalam aktivitas keluarga</li>
+              <li>Dukung minat dan bakat anak</li>
+              <li>Ajarkan anak untuk mandiri sesuai usianya</li>
+            </ul>
+          `,
+          quiz: [
+            {
+              question: 'Kapan periode emas (golden age) perkembangan anak?',
+              options: [
+                '0-1 tahun',
+                '0-2 tahun',
+                '1-3 tahun',
+                '2-5 tahun'
+              ],
+              correct: 1
+            },
+            {
+              question: 'Apa yang dimaksud dengan 1000 hari pertama kehidupan dalam pencegahan stunting?',
+              options: [
+                'Dari lahir sampai 1000 hari',
+                'Dari hamil sampai anak 2 tahun',
+                'Dari menyusui sampai 1000 hari',
+                'Dari MPASI sampai 1000 hari'
+              ],
+              correct: 1
+            }
+          ]
+        },
+        unlocked: false,
+        completed: false
+      },
+      {
+        id: 'evaluation',
+        title: 'Evaluasi & Refleksi Akhir',
+        description: 'Evaluasi pemahaman materi, refleksi pembelajaran, dan tes akhir komprehensif',
+        icon: 'fas fa-clipboard-check',
+        duration: '30 menit',
+        type: 'evaluation',
+        content: {
+          evaluation: [
+            {
+              question: 'Apa yang paling Anda pelajari dari program bimbingan pranikah ini?',
+              type: 'essay',
+              required: true
+            },
+            {
+              question: 'Bagaimana Anda akan menerapkan ilmu yang didapat dalam kehidupan berumah tangga?',
+              type: 'essay',
+              required: true
+            },
+            {
+              question: 'Sebutkan 3 hal terpenting yang harus dipersiapkan sebelum menikah menurut Anda!',
+              type: 'essay',
+              required: true
+            }
+          ],
+          finalQuiz: [
+            {
+              question: 'Karakteristik utama keluarga sakinah adalah:',
+              options: [
+                'Kaya dan terkenal',
+                'Berdasarkan ketakwaan kepada Allah',
+                'Memiliki banyak anak',
+                'Tinggal di rumah mewah'
+              ],
+              correct: 1
+            },
+            {
+              question: 'Prinsip komunikasi efektif dalam keluarga adalah:',
+              options: [
+                'Selalu menang dalam diskusi',
+                'Mendengarkan aktif dan empati',
+                'Berbicara lebih keras',
+                'Menghindari konflik'
+              ],
+              correct: 1
+            },
+            {
+              question: 'Berapa persen ideal penghasilan yang dialokasikan untuk tabungan?',
+              options: [
+                '5-10%',
+                '10-20%',
+                '20-30%',
+                '30-50%'
+              ],
+              correct: 1
+            },
+            {
+              question: 'Kapan sebaiknya mulai konsumsi asam folat untuk persiapan kehamilan?',
+              options: [
+                'Setelah hamil',
+                'Minimal 1 bulan sebelum hamil',
+                'Saat melahirkan',
+                'Tidak perlu'
+              ],
+              correct: 1
+            },
+            {
+              question: 'Periode golden age perkembangan anak adalah:',
+              options: [
+                '0-1 tahun',
+                '0-2 tahun',
+                '1-3 tahun',
+                '2-5 tahun'
+              ],
+              correct: 1
+            }
+          ]
+        },
+        unlocked: false,
+        completed: false
+      }
+    ];
+
+    const mentorData = [
+      {
+        id: 1,
+        name: 'Dr. Siti Nurhaliza, M.Psi',
+        type: 'Psikolog Keluarga',
+        category: 'psychologist',
+        rating: 4.9,
+        experience: '8 tahun',
+        specialization: 'Konseling pranikah dan terapi keluarga',
+        schedule: [
+          { day: 'Senin', time: '09:00-12:00' },
+          { day: 'Rabu', time: '14:00-17:00' },
+          { day: 'Jumat', time: '09:00-12:00' }
+        ],
+        price: 'Rp 150.000/sesi',
+        avatar: 'fas fa-user-md'
+      },
+      {
+        id: 2,
+        name: 'Ustadz Ahmad Maulana, M.Ag',
+        type: 'Mentor Agama',
+        category: 'religious',
+        rating: 4.8,
+        experience: '12 tahun',
+        specialization: 'Bimbingan pernikahan islami dan fiqh munakahat',
+        schedule: [
+          { day: 'Selasa', time: '08:00-11:00' },
+          { day: 'Kamis', time: '13:00-16:00' },
+          { day: 'Sabtu', time: '09:00-12:00' }
+        ],
+        price: 'Rp 100.000/sesi',
+        avatar: 'fas fa-mosque'
+      },
+      {
+        id: 3,
+        name: 'Dr. Rina Kartika, Sp.OG',
+        type: 'Dokter Spesialis',
+        category: 'medical',
+        rating: 4.7,
+        experience: '10 tahun',
+        specialization: 'Kesehatan reproduksi dan konseling prakonsepsi',
+        schedule: [
+          { day: 'Senin', time: '13:00-16:00' },
+          { day: 'Rabu', time: '09:00-12:00' },
+          { day: 'Jumat', time: '14:00-17:00' }
+        ],
+        price: 'Rp 200.000/sesi',
+        avatar: 'fas fa-stethoscope'
+      },
+      {
+        id: 4,
+        name: 'Drs. Bambang Sutrisno, M.Ed',
+        type: 'Konselor Keluarga',
+        category: 'counselor',
+        rating: 4.6,
+        experience: '15 tahun',
+        specialization: 'Dinamika keluarga dan manajemen keuangan rumah tangga',
+        schedule: [
+          { day: 'Selasa', time: '14:00-17:00' },
+          { day: 'Kamis', time: '09:00-12:00' },
+          { day: 'Sabtu', time: '13:00-16:00' }
+        ],
+        price: 'Rp 125.000/sesi',
+        avatar: 'fas fa-chalkboard-teacher'
+      }
+    ];
+
+    // State Management
+    let currentUser = {
+      name: '',
+      progress: {
+        completedModules: 0,
+        totalQuizzes: 0,
+        studyTime: 0,
+        scores: [],
+        mentorApproved: false,
+        certificateEarned: false
+      }
+    };
+
+    let currentModule = null;
+    let currentQuiz = null;
+    let quizAnswers = {};
+    let selectedMentor = null;
+    let bookingData = null;
+
+    // Initialize Application
+    document.addEventListener('DOMContentLoaded', function() {
+      initializeApp();
+    });
+
+    function initializeApp() {
+      // Check if user is returning
+      const savedUser = localStorage.getItem('pranikahUser');
+      if (savedUser) {
+        currentUser = JSON.parse(savedUser);
+      } else {
+        // First time user - show welcome
+        showWelcomeDialog();
+      }
+      
+      renderModules();
+      updateProgress();
+      updateMentorAccess();
+      setupEventListeners();
+    }
+
+    function showWelcomeDialog() {
+      showAlert('info', 'Selamat datang di LMS Kelas Pranikah! Silakan mulai dengan Pre-test dan lanjutkan dengan modul pembelajaran secara berurutan.');
+    }
+
+    function saveUserProgress() {
+      localStorage.setItem('pranikahUser', JSON.stringify(currentUser));
+    }
+
+    function setupEventListeners() {
+      // Modal click outside to close
+      window.onclick = function(event) {
+        const moduleModal = document.getElementById('moduleModal');
+        const mentorModal = document.getElementById('mentorModal');
+        
+        if (event.target === moduleModal) {
+          closeModal();
+        }
+        if (event.target === mentorModal) {
+          closeMentorModal();
+        }
+      }
+    }
+
+    // Navigation Functions
+    function switchTab(tabName) {
+      // Remove active class from all tabs and sections
+      document.querySelectorAll('.nav-tab').forEach(tab => tab.classList.remove('active'));
+      document.querySelectorAll('.content-section').forEach(section => section.classList.remove('active'));
+      
+      // Add active class to clicked tab and corresponding section
+      event.target.classList.add('active');
+      document.getElementById(tabName).classList.add('active');
+    }
+
+    // Module Rendering
+    function renderModules() {
+      const container = document.getElementById('modulesContainer');
+      container.innerHTML = '';
+      
+      moduleData.forEach((module, index) => {
+        const moduleCard = createModuleCard(module, index);
+        container.appendChild(moduleCard);
+      });
+    }
+
+    function createModuleCard(module, index) {
+      const card = document.createElement('div');
+      card.className = `module-card ${getModuleStatus(module, index)}`;
+      
+      const statusText = getStatusText(module, index);
+      const statusClass = getStatusClass(module, index);
+      
+      card.innerHTML = `
+        <div class="module-status ${statusClass}">${statusText}</div>
+        <div class="module-icon">
+          <i class="${module.icon}"></i>
+        </div>
+        <div class="module-title">${module.title}</div>
+        <div class="module-description">${module.description}</div>
+        <div class="module-meta">
+          <div class="module-duration">
+            <i class="fas fa-clock"></i> ${module.duration}
+          </div>
+          <div class="module-progress">
+            ${module.completed ? '100%' : '0%'}
+          </div>
+        </div>
+        <button class="btn ${module.unlocked ? 'btn-primary' : 'btn-disabled'}" 
+                onclick="openModule('${module.id}')" 
+                ${!module.unlocked ? 'disabled' : ''}>
+          ${module.completed ? 'Review Materi' : 'Mulai Belajar'}
+        </button>
+        ${!module.unlocked ? '<div class="locked-overlay"><i class="fas fa-lock"></i><div class="locked-text">Selesaikan modul sebelumnya</div></div>' : ''}
+      `;
+      
+      return card;
+    }
+
+    function getModuleStatus(module, index) {
+      if (!module.unlocked && !module.completed) return 'locked';
+      if (module.completed) return 'completed';
+      return '';
+    }
+
+    function getStatusText(module, index) {
+      if (module.completed) return 'Selesai';
+      if (!module.unlocked) return 'Terkunci';
+      return 'Tersedia';
+    }
+
+    function getStatusClass(module, index) {
+      if (module.completed) return 'status-completed';
+      if (!module.unlocked) return 'status-locked';
+      return 'status-active';
+    }
+
+    // Module Content Functions
+    function openModule(moduleId) {
+      currentModule = moduleData.find(m => m.id === moduleId);
+      if (!currentModule || !currentModule.unlocked) return;
+      
+      const modal = document.getElementById('moduleModal');
+      const content = document.getElementById('modalContent');
+      
+      content.innerHTML = generateModuleContent(currentModule);
+      modal.style.display = 'block';
+      
+      // Add to study time
+      currentUser.progress.studyTime += 0.5;
+      saveUserProgress();
+    }
+
+    function generateModuleContent(module) {
+      let content = `<h2><i class="${module.icon}"></i> ${module.title}</h2>`;
+      
+      if (module.type === 'pretest') {
+        content += generatePretestContent(module);
+      } else if (module.type === 'evaluation') {
+        content += generateEvaluationContent(module);
+      } else {
+        content += generateLearningContent(module);
+      }
+      
+      return content;
+    }
+
+    function generatePretestContent(module) {
+      return `
+        <div class="alert alert-info">
+          <i class="fas fa-info-circle"></i>
+          <div>Pre-test ini untuk mengukur pemahaman awal Anda. Jawablah dengan jujur sesuai pengetahuan saat ini.</div>
+        </div>
+        <div id="pretestQuestions">
+          ${module.content.pretest.map((q, i) => `
+            <div class="quiz-container">
+              <div class="question">${i + 1}. ${q.question}</div>
+              <div class="options">
+                ${q.options.map((option, j) => `
+                  <div class="option" onclick="selectPretestAnswer(${i}, ${j})" id="pretest-${i}-${j}">
+                    ${option}
+                  </div>
+                `).join('')}
+              </div>
+              <div id="pretestResult-${i}"></div>
+            </div>
+          `).join('')}
+        </div>
+        <button class="btn btn-success" onclick="submitPretest()" id="submitPretestBtn" style="display:none;">
+          Lanjutkan ke Pembelajaran
+        </button>
+      `;
+    }
+
+    function generateEvaluationContent(module) {
+      return `
+        <div class="alert alert-warning">
+          <i class="fas fa-exclamation-triangle"></i>
+          <div>Ini adalah evaluasi akhir. Anda harus lulus untuk dapat booking mentor.</div>
+        </div>
+        
+        <h3>Refleksi Pembelajaran</h3>
+        ${module.content.evaluation.map((q, i) => `
+          <div style="margin-bottom: 20px;">
+            <label style="font-weight: 600; display: block; margin-bottom: 10px;">
+              ${i + 1}. ${q.question} ${q.required ? '<span style="color: red;">*</span>' : ''}
+            </label>
+            <textarea id="evaluation-${i}" style="width: 100%; min-height: 100px; padding: 10px; border: 1px solid #ddd; border-radius: 5px;" 
+                      placeholder="Tuliskan jawaban Anda..."></textarea>
+          </div>
+        `).join('')}
+        
+        <h3>Tes Akhir Komprehensif</h3>
+        <div id="finalQuizQuestions">
+          ${module.content.finalQuiz.map((q, i) => `
+            <div class="quiz-container">
+              <div class="question">${i + 1}. ${q.question}</div>
+              <div class="options">
+                ${q.options.map((option, j) => `
+                  <div class="option" onclick="selectFinalAnswer(${i}, ${j})" id="final-${i}-${j}">
+                    ${option}
+                  </div>
+                `).join('')}
+              </div>
+              <div id="finalResult-${i}"></div>
+            </div>
+          `).join('')}
+        </div>
+        
+        <button class="btn btn-success" onclick="submitEvaluation()" id="submitEvaluationBtn">
+          Submit Evaluasi Akhir
+        </button>
+      `;
+    }
+
+    function generateLearningContent(module) {
+      let content = '';
+      
+      // Add video if available
+      if (module.content.video) {
+        content += `
+          <div style="margin-bottom: 30px;">
+            <h3><i class="fas fa-play-circle"></i> Video Pembelajaran</h3>
+            <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
+              <iframe src="${module.content.video}" 
+                      style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; border-radius: 10px;"
+                      allowfullscreen></iframe>
+            </div>
+          </div>
+        `;
+      }
+      
+      // Add text content
+      if (module.content.text) {
+        content += `
+          <div style="margin-bottom: 30px;">
+            <h3><i class="fas fa-book-open"></i> Materi Pembelajaran</h3>
+            <div style="background: #f8f9fa; padding: 20px; border-radius: 10px; line-height: 1.8;">
+              ${module.content.text}
+            </div>
+          </div>
+        `;
+      }
+      
+      // Add quiz
+      if (module.content.quiz) {
+        content += `
+          <div style="margin-top: 30px;">
+            <h3><i class="fas fa-question-circle"></i> Kuis Pemahaman</h3>
+            <div class="alert alert-info">
+              <i class="fas fa-info-circle"></i>
+              <div>Jawab semua pertanyaan dengan benar untuk melanjutkan ke modul berikutnya.</div>
+            </div>
+            <div id="quizQuestions">
+              ${module.content.quiz.map((q, i) => `
+                <div class="quiz-container">
+                  <div class="question">${i + 1}. ${q.question}</div>
+                  <div class="options">
+                    ${q.options.map((option, j) => `
+                      <div class="option" onclick="selectQuizAnswer(${i}, ${j})" id="quiz-${i}-${j}">
+                        ${option}
+                      </div>
+                    `).join('')}
+                  </div>
+                  <div id="quizResult-${i}"></div>
+                </div>
+              `).join('')}
+            </div>
+            <button class="btn btn-success" onclick="submitQuiz()" id="submitQuizBtn" style="display:none;">
+              Selesaikan Modul
+            </button>
+          </div>
+        `;
+      }
+      
+      return content;
+    }
+
+    // Quiz Functions
+    let pretestAnswers = {};
+    let finalAnswers = {};
+    
+    function selectPretestAnswer(questionIndex, answerIndex) {
+      pretestAnswers[questionIndex] = answerIndex;
+      
+      // Remove selection from all options for this question
+      const allOptions = document.querySelectorAll(`[id^="pretest-${questionIndex}-"]`);
+      allOptions.forEach(option => option.classList.remove('selected'));
+      
+      // Add selection to clicked option
+      document.getElementById(`pretest-${questionIndex}-${answerIndex}`).classList.add('selected');
+      
+      // Check if all questions are answered
+      if (Object.keys(pretestAnswers).length === currentModule.content.pretest.length) {
+        document.getElementById('submitPretestBtn').style.display = 'block';
+      }
+    }
+
+    function submitPretest() {
+      // Calculate score
+      let correct = 0;
+      currentModule.content.pretest.forEach((q, i) => {
+        if (pretestAnswers[i] === q.correct) {
+          correct++;
+        }
+      });
+      
+      const score = Math.round((correct / currentModule.content.pretest.length) * 100);
+      
+      // Mark as completed and unlock next module
+      currentModule.completed = true;
+      unlockNextModule(currentModule.id);
+      
+      // Update progress
+      currentUser.progress.completedModules++;
+      currentUser.progress.scores.push(score);
+      saveUserProgress();
+      
+      showAlert('success', `Pre-test selesai! Skor Anda: ${score}%. Modul pembelajaran pertama telah terbuka.`);
+      
+      setTimeout(() => {
+        closeModal();
+        renderModules();
+        updateProgress();
+      }, 2000);
+    }
+
+    function selectQuizAnswer(questionIndex, answerIndex) {
+      if (!quizAnswers[currentModule.id]) {
+        quizAnswers[currentModule.id] = {};
+      }
+      quizAnswers[currentModule.id][questionIndex] = answerIndex;
+      
+      // Remove selection from all options for this question
+      const allOptions = document.querySelectorAll(`[id^="quiz-${questionIndex}-"]`);
+      allOptions.forEach(option => option.classList.remove('selected'));
+      
+      // Add selection to clicked option
+      document.getElementById(`quiz-${questionIndex}-${answerIndex}`).classList.add('selected');
+      
+      // Check if all questions are answered
+      if (Object.keys(quizAnswers[currentModule.id]).length === currentModule.content.quiz.length) {
+        document.getElementById('submitQuizBtn').style.display = 'block';
+      }
+    }
+
+    function submitQuiz() {
+      let correct = 0;
+      let allCorrect = true;
+      
+      currentModule.content.quiz.forEach((q, i) => {
+        const userAnswer = quizAnswers[currentModule.id][i];
+        const isCorrect = userAnswer === q.correct;
+        
+        if (isCorrect) {
+          correct++;
+          document.getElementById(`quizResult-${i}`).innerHTML = `
+            <div class="quiz-result correct">
+              <i class="fas fa-check-circle"></i> Benar!
+            </div>
+          `;
+          document.getElementById(`quiz-${i}-${userAnswer}`).classList.add('correct');
+        } else {
+          allCorrect = false;
+          document.getElementById(`quizResult-${i}`).innerHTML = `
+            <div class="quiz-result wrong">
+              <i class="fas fa-times-circle"></i> Salah! Jawaban yang benar: ${q.options[q.correct]}
+            </div>
+          `;
+          document.getElementById(`quiz-${i}-${userAnswer}`).classList.add('wrong');
+          document.getElementById(`quiz-${i}-${q.correct}`).classList.add('correct');
+        }
+      });
+      
+      const score = Math.round((correct / currentModule.content.quiz.length) * 100);
+      
+      if (allCorrect) {
+        // Mark as completed and unlock next module
+        currentModule.completed = true;
+        unlockNextModule(currentModule.id);
+        
+        // Update progress
+        currentUser.progress.completedModules++;
+        currentUser.progress.totalQuizzes++;
+        currentUser.progress.scores.push(score);
+        saveUserProgress();
+        
+        showAlert('success', `Selamat! Anda lulus kuis ini dengan skor ${score}%. Modul berikutnya telah terbuka.`);
+        
+        setTimeout(() => {
+          closeModal();
+          renderModules();
+          updateProgress();
+        }, 3000);
+      } else {
+        showAlert('warning', `Skor Anda: ${score}%. Anda harus menjawab semua pertanyaan dengan benar untuk lanjut. Silakan pelajari kembali materi dan coba lagi.`);
+        
+        // Reset quiz after 5 seconds
+        setTimeout(() => {
+          location.reload();
+        }, 5000);
+      }
+    }
+
+    function selectFinalAnswer(questionIndex, answerIndex) {
+      finalAnswers[questionIndex] = answerIndex;
+      
+      // Remove selection from all options for this question
+      const allOptions = document.querySelectorAll(`[id^="final-${questionIndex}-"]`);
+      allOptions.forEach(option => option.classList.remove('selected'));
+      
+      // Add selection to clicked option
+      document.getElementById(`final-${questionIndex}-${answerIndex}`).classList.add('selected');
+    }
+
+    function submitEvaluation() {
+      // Check essay answers
+      const essayAnswers = [];
+      for (let i = 0; i < currentModule.content.evaluation.length; i++) {
+        const answer = document.getElementById(`evaluation-${i}`).value.trim();
+        if (answer.length < 50) {
+          showAlert('warning', `Jawaban untuk pertanyaan ${i + 1} terlalu singkat. Minimal 50 karakter.`);
+          return;
+        }
+        essayAnswers.push(answer);
+      }
+      
+      // Check final quiz answers
+      if (Object.keys(finalAnswers).length !== currentModule.content.finalQuiz.length) {
+        showAlert('warning', 'Silakan jawab semua pertanyaan kuis akhir.');
+        return;
+      }
+      
+      // Calculate final quiz score
+      let correct = 0;
+      currentModule.content.finalQuiz.forEach((q, i) => {
+        if (finalAnswers[i] === q.correct) {
+          correct++;
+        }
+      });
+      
+      const score = Math.round((correct / currentModule.content.finalQuiz.length) * 100);
+      
+      if (score >= 80) {
+        // Mark as completed
+        currentModule.completed = true;
+        currentUser.progress.completedModules++;
+        currentUser.progress.totalQuizzes++;
+        currentUser.progress.scores.push(score);
+        saveUserProgress();
+        
+        showAlert('success', `Selamat! Anda lulus evaluasi akhir dengan skor ${score}%. Fitur booking mentor telah aktif.`);
+        
+        setTimeout(() => {
+          closeModal();
+          renderModules();
+          updateProgress();
+          updateMentorAccess();
+        }, 3000);
+      } else {
+        showAlert('warning', `Skor Anda: ${score}%. Minimum skor untuk lulus adalah 80%. Silakan pelajari kembali materi dan coba lagi.`);
+      }
+    }
+
+    function unlockNextModule(currentModuleId) {
+      const currentIndex = moduleData.findIndex(m => m.id === currentModuleId);
+      if (currentIndex < moduleData.length - 1) {
+        moduleData[currentIndex + 1].unlocked = true;
+      }
+    }
+
+    // Progress Update Functions
+    function updateProgress() {
+      const completedCount = moduleData.filter(m => m.completed).length;
+      const totalModules = moduleData.length;
+      const percentage = Math.round((completedCount / totalModules) * 100);
+      
+      document.getElementById('progressBar').style.width = percentage + '%';
+      document.getElementById('overallProgress').textContent = percentage + '%';
+      document.getElementById('completedModules').textContent = currentUser.progress.completedModules;
+      document.getElementById('totalQuizzes').textContent = currentUser.progress.totalQuizzes;
+      document.getElementById('studyTime').textContent = Math.round(currentUser.progress.studyTime);
+      
+      const avgScore = currentUser.progress.scores.length > 0 
+        ? Math.round(currentUser.progress.scores.reduce((a, b) => a + b, 0) / currentUser.progress.scores.length)
+        : 0;
+      document.getElementById('averageScore').textContent = avgScore + '%';
+    }
+
+    function updateMentorAccess() {
+      const allCompleted = moduleData.every(m => m.completed);
+      const mentorTab = document.getElementById('mentorTab');
+      const mentorLockMessage = document.getElementById('mentorLockMessage');
+      const mentorContent = document.getElementById('mentorContent');
+      
+      if (allCompleted) {
+        mentorTab.style.pointerEvents = 'auto';
+        mentorTab.style.opacity = '1';
+        mentorLockMessage.style.display = 'none';
+        mentorContent.style.display = 'block';
+        renderMentors();
+      } else {
+        mentorTab.style.pointerEvents = 'none';
+        mentorTab.style.opacity = '0.6';
+        mentorLockMessage.style.display = 'block';
+        mentorContent.style.display = 'none';
+      }
+    }
+
+    // Mentor Functions
+    function renderMentors() {
+      const container = document.getElementById('mentorContainer');
+      container.innerHTML = '';
+      
+      mentorData.forEach(mentor => {
+        const mentorCard = createMentorCard(mentor);
+        container.appendChild(mentorCard);
+      });
+    }
+
+    function createMentorCard(mentor) {
+      const card = document.createElement('div');
+      card.className = `mentor-card ${mentor.category}`;
+      
+      const stars = '★'.repeat(Math.floor(mentor.rating)) + (mentor.rating % 1 ? '☆' : '');
+      
+      card.innerHTML = `
+        <div class="mentor-avatar">
+          <i class="${mentor.avatar}"></i>
+        </div>
+        <div class="mentor-name">${mentor.name}</div>
+        <div class="mentor-type">${mentor.type}</div>
+        <div class="mentor-rating">
+          <div class="stars">${stars}</div>
+          <div class="rating-number">(${mentor.rating})</div>
+        </div>
+        <div style="margin-bottom: 10px;">
+          <strong>Pengalaman:</strong> ${mentor.experience}<br>
+          <strong>Spesialisasi:</strong> ${mentor.specialization}<br>
+          <strong>Tarif:</strong> ${mentor.price}
+        </div>
+        <div class="mentor-schedule">
+          <div class="schedule-title">Jadwal Tersedia:</div>
+          <div class="time-slots">
+            ${mentor.schedule.map(slot => `
+              <div class="time-slot" onclick="selectTimeSlot('${mentor.id}', '${slot.day}', '${slot.time}')">
+                ${slot.day}<br>${slot.time}
+              </div>
+            `).join('')}
+          </div>
+        </div>
+        <button class="btn btn-primary" onclick="bookMentor(${mentor.id})">
+          <i class="fas fa-calendar-plus"></i> Booking Konsultasi
+        </button>
+      `;
+      
+      return card;
+    }
+
+    function selectTimeSlot(mentorId, day, time) {
+      // Remove selection from all time slots
+      document.querySelectorAll('.time-slot').forEach(slot => {
+        slot.classList.remove('selected');
+      });
+      
+      // Add selection to clicked slot
+      event.target.classList.add('selected');
+      
+      // Store selected slot
+      selectedMentor = {
+        id: mentorId,
+        day: day,
+        time: time
+      };
+    }
+
+    function bookMentor(mentorId) {
+      if (!selectedMentor || selectedMentor.id != mentorId) {
+        showAlert('warning', 'Silakan pilih jadwal konsultasi terlebih dahulu.');
+        return;
+      }
+      
+      const mentor = mentorData.find(m => m.id == mentorId);
+      showBookingModal(mentor);
+    }
+
+    function showBookingModal(mentor) {
+      const modal = document.getElementById('mentorModal');
+      const content = document.getElementById('mentorModalContent');
+      
+      content.innerHTML = `
+        <h2><i class="fas fa-calendar-check"></i> Booking Konsultasi</h2>
+        <div style="background: #f8f9fa; padding: 20px; border-radius: 10px; margin-bottom: 20px;">
+          <h3>${mentor.name}</h3>
+          <p><strong>Jadwal:</strong> ${selectedMentor.day}, ${selectedMentor.time}</p>
+          <p><strong>Tarif:</strong> ${mentor.price}</p>
+        </div>
+        
+        <form onsubmit="submitBooking(event, ${mentor.id})">
+          <div style="margin-bottom: 15px;">
+            <label style="display: block; margin-bottom: 5px; font-weight: 600;">Nama Lengkap *</label>
+            <input type="text" id="bookingName" required style="width: 100%;" placeholder="Masukkan nama lengkap">
+          </div>
+          
+          <div style="margin-bottom: 15px;">
+            <label style="display: block; margin-bottom: 5px; font-weight: 600;">Nomor WhatsApp *</label>
+            <input type="tel" id="bookingPhone" required style="width: 100%;" placeholder="08xxxxxxxxxx">
+          </div>
+          
+          <div style="margin-bottom: 15px;">
+            <label style="display: block; margin-bottom: 5px; font-weight: 600;">Topik Konsultasi *</label>
+            <select id="bookingTopic" required style="width: 100%;">
+              <option value="">Pilih topik konsultasi</option>
+              <option value="persiapan-mental">Persiapan Mental Menikah</option>
+              <option value="komunikasi">Komunikasi Dalam Rumah Tangga</option>
+              <option value="keuangan">Manajemen Keuangan Keluarga</option>
+              <option value="kesehatan">Kesehatan Reproduksi</option>
+              <option value="parenting">Persiapan Menjadi Orang Tua</option>
+              <option value="lainnya">Lainnya</option>
+            </select>
+          </div>
+          
+          <div style="margin-bottom: 20px;">
+            <label style="display: block; margin-bottom: 5px; font-weight: 600;">Deskripsi Masalah</label>
+            <textarea id="bookingDescription" style="width: 100%; min-height: 100px;" 
+                      placeholder="Ceritakan masalah atau hal yang ingin dikonsultasikan..."></textarea>
+          </div>
+          
+          <button type="submit" class="btn btn-success" style="width: 100%;">
+            <i class="fas fa-check"></i> Konfirmasi Booking
+          </button>
+        </form>
+      `;
+      
+      modal.style.display = 'block';
+    }
+
+    function submitBooking(event, mentorId) {
+      event.preventDefault();
+      
+      const mentor = mentorData.find(m => m.id == mentorId);
+      const bookingData = {
+        mentorId: mentorId,
+        mentorName: mentor.name,
+        name: document.getElementById('bookingName').value,
+        phone: document.getElementById('bookingPhone').value,
+        topic: document.getElementById('bookingTopic').value,
+        description: document.getElementById('bookingDescription').value,
+        schedule: `${selectedMentor.day}, ${selectedMentor.time}`,
+        status: 'pending',
+        bookingDate: new Date().toISOString()
+      };
+      
+      // Save booking
+      currentUser.booking = bookingData;
+      saveUserProgress();
+      
+      closeMentorModal();
+      showAlert('success', 'Booking berhasil! Mentor akan menghubungi Anda untuk konfirmasi jadwal.');
+      
+      // Simulate mentor response after 3 seconds
+      setTimeout(() => {
+        simulateMentorEvaluation();
+      }, 3000);
+    }
+
+    function simulateMentorEvaluation() {
+      // Simulate mentor evaluation based on user performance
+      const avgScore = currentUser.progress.scores.length > 0 
+        ? currentUser.progress.scores.reduce((a, b) => a + b, 0) / currentUser.progress.scores.length
+        : 0;
+      
+      const passed = avgScore >= 75 && currentUser.progress.completedModules === moduleData.length;
+      
+      if (passed) {
+        currentUser.progress.mentorApproved = true;
+        currentUser.progress.certificateEarned = true;
+        saveUserProgress();
+        
+        showAlert('success', 'Selamat! Mentor menyatakan Anda LULUS evaluasi. Sertifikat sudah tersedia untuk diunduh.');
+        updateCertificateAccess();
+      } else {
+        showAlert('warning', 'Mentor merekomendasikan Anda untuk mengulang beberapa materi LMS. Booking mentor akan dibuka kembali setelah Anda memperbaiki pemahaman.');
+        
+        // Reset some modules for revision
+        moduleData.forEach(module => {
+          if (module.type === 'learning') {
+            module.completed = false;
+            module.unlocked = true;
+          }
+        });
+        
+        renderModules();
+        updateMentorAccess();
+      }
+    }
+
+    function updateCertificateAccess() {
+      const certificateMessage = document.getElementById('certificateMessage');
+      const certificateContent = document.getElementById('certificateContent');
+      
+      if (currentUser.progress.certificateEarned) {
+        certificateMessage.style.display = 'none';
+        certificateContent.style.display = 'block';
+      }
+    }
+
+    // Certificate Functions
+    function downloadCertificate() {
+      showAlert('info', 'Fitur download sertifikat sedang dalam pengembangan. Sertifikat akan dikirim via email dalam 1x24 jam.');
+    }
+
+    // Modal Functions
+    function closeModal() {
+      document.getElementById('moduleModal').style.display = 'none';
+      currentModule = null;
+      quizAnswers = {};
+    }
+
+    function closeMentorModal() {
+      document.getElementById('mentorModal').style.display = 'none';
+      selectedMentor = null;
+    }
+
+    // Alert Functions
+    function showAlert(type, message) {
+      const container = document.getElementById('alertContainer');
+      const alert = document.createElement('div');
+      alert.className = `alert alert-${type}`;
+      
+      const icon = type === 'success' ? 'fas fa-check-circle' : 
+                   type === 'warning' ? 'fas fa-exclamation-triangle' : 
+                   'fas fa-info-circle';
+      
+      alert.innerHTML = `
+        <i class="${icon}"></i>
+        <div>${message}</div>
+      `;
+      
+      container.appendChild(alert);
+      
+      // Auto remove after 5 seconds
+      setTimeout(() => {
+        if (alert.parentNode) {
+          alert.parentNode.removeChild(alert);
+        }
+      }, 5000);
+    }
+
+    // Initialize first module
+    moduleData[0].unlocked = true;
+  </script>
+</body>
+</html>
